@@ -1,0 +1,251 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "autoname": "naming_series:",
+  "creation": "2024-01-01 00:00:00.000000",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "naming_series",
+    "posting_date",
+    "employee",
+    "employee_name",
+    "department",
+    "loan_type",
+    "section_break_advance",
+    "advance_amount",
+    "advance_repayment_month",
+    "section_break_loan",
+    "loan_amount",
+    "installments_count",
+    "installment_amount",
+    "column_break_loan",
+    "month_selection_html",
+    "section_break_schedule",
+    "repayment_schedule",
+    "section_break_status",
+    "total_amount",
+    "repaid_amount",
+    "remaining_balance",
+    "loan_status",
+    "amended_from"
+  ],
+  "fields": [
+    {
+      "default": "LOAN-.YYYY.-",
+      "fieldname": "naming_series",
+      "fieldtype": "Select",
+      "label": "Series",
+      "options": "LOAN-.YYYY.-",
+      "reqd": 1
+    },
+    {
+      "default": "Today",
+      "fieldname": "posting_date",
+      "fieldtype": "Date",
+      "label": "Posting Date",
+      "reqd": 1
+    },
+    {
+      "fieldname": "employee",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Employee",
+      "options": "Employee",
+      "reqd": 1
+    },
+    {
+      "fetch_from": "employee.employee_name",
+      "fieldname": "employee_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Employee Name",
+      "read_only": 1
+    },
+    {
+      "fetch_from": "employee.department",
+      "fieldname": "department",
+      "fieldtype": "Link",
+      "label": "Department",
+      "options": "Department",
+      "read_only": 1
+    },
+    {
+      "fieldname": "loan_type",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Loan Type",
+      "options": "\nAdvance\nLoan",
+      "reqd": 1
+    },
+    {
+      "depends_on": "eval:doc.loan_type=='Advance'",
+      "fieldname": "section_break_advance",
+      "fieldtype": "Section Break",
+      "label": "Advance Details"
+    },
+    {
+      "depends_on": "eval:doc.loan_type=='Advance'",
+      "fieldname": "advance_amount",
+      "fieldtype": "Currency",
+      "label": "Advance Amount",
+      "mandatory_depends_on": "eval:doc.loan_type=='Advance'"
+    },
+    {
+      "depends_on": "eval:doc.loan_type=='Advance'",
+      "fieldname": "advance_repayment_month",
+      "fieldtype": "Select",
+      "label": "Repayment Month",
+      "mandatory_depends_on": "eval:doc.loan_type=='Advance'",
+      "options": ""
+    },
+    {
+      "depends_on": "eval:doc.loan_type=='Loan'",
+      "fieldname": "section_break_loan",
+      "fieldtype": "Section Break",
+      "label": "Loan Details"
+    },
+    {
+      "depends_on": "eval:doc.loan_type=='Loan'",
+      "fieldname": "loan_amount",
+      "fieldtype": "Currency",
+      "label": "Loan Amount",
+      "mandatory_depends_on": "eval:doc.loan_type=='Loan'"
+    },
+    {
+      "depends_on": "eval:doc.loan_type=='Loan'",
+      "fieldname": "installments_count",
+      "fieldtype": "Int",
+      "label": "Number of Installments",
+      "mandatory_depends_on": "eval:doc.loan_type=='Loan'"
+    },
+    {
+      "depends_on": "eval:doc.loan_type=='Loan'",
+      "fieldname": "installment_amount",
+      "fieldtype": "Currency",
+      "label": "Installment Amount",
+      "read_only": 1
+    },
+    {
+      "depends_on": "eval:doc.loan_type=='Loan'",
+      "fieldname": "column_break_loan",
+      "fieldtype": "Column Break"
+    },
+    {
+      "depends_on": "eval:doc.loan_type=='Loan' && doc.installments_count",
+      "fieldname": "month_selection_html",
+      "fieldtype": "HTML",
+      "label": "Select Repayment Months",
+      "options": "<div id='month-selection-container'></div>"
+    },
+    {
+      "fieldname": "section_break_schedule",
+      "fieldtype": "Section Break",
+      "label": "Repayment Schedule"
+    },
+    {
+      "fieldname": "repayment_schedule",
+      "fieldtype": "Table",
+      "label": "Repayment Schedule",
+      "options": "Loan Repayment Schedule"
+    },
+    {
+      "fieldname": "section_break_status",
+      "fieldtype": "Section Break",
+      "label": "Status"
+    },
+    {
+      "fieldname": "total_amount",
+      "fieldtype": "Currency",
+      "in_list_view": 1,
+      "label": "Total Amount",
+      "read_only": 1
+    },
+    {
+      "default": "0",
+      "fieldname": "repaid_amount",
+      "fieldtype": "Currency",
+      "label": "Repaid Amount",
+      "read_only": 1
+    },
+    {
+      "fieldname": "remaining_balance",
+      "fieldtype": "Currency",
+      "in_list_view": 1,
+      "label": "Remaining Balance",
+      "read_only": 1
+    },
+    {
+      "default": "Draft",
+      "fieldname": "loan_status",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Loan Status",
+      "options": "Draft\nApproved\nPartially Repaid\nFully Repaid",
+      "read_only": 1
+    },
+    {
+      "fieldname": "amended_from",
+      "fieldtype": "Link",
+      "label": "Amended From",
+      "no_copy": 1,
+      "options": "Loan Application",
+      "print_hide": 1,
+      "read_only": 1
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "is_submittable": 1,
+  "links": [],
+  "modified": "2024-01-01 00:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Loan Management",
+  "name": "Loan Application",
+  "naming_rule": "By \"Naming Series\" field",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "HR User",
+      "share": 1,
+      "submit": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "HR Manager",
+      "share": 1,
+      "submit": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Employee",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "title_field": "employee_name",
+  "track_changes": 1
+}

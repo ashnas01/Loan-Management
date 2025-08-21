@@ -90,6 +90,7 @@ app_license = "mit"
 
 # before_uninstall = "loan_management.uninstall.before_uninstall"
 # after_uninstall = "loan_management.uninstall.after_uninstall"
+after_install = "loan_management.setup.after_install"
 
 # Integration Setup
 # ------------------
@@ -144,6 +145,15 @@ app_license = "mit"
 # 		"on_trash": "method"
 # 	}
 # }
+doc_events = {
+    "Payroll Entry": {
+        "on_submit": "loan_management.loan_management.utils.payroll_hooks.process_loan_deductions"
+    },
+    "Salary Slip": {
+        "before_save": "loan_management.loan_management.utils.payroll_hooks.add_loan_deductions_to_slip",
+        "on_submit": "loan_management.loan_management.utils.payroll_hooks.update_repayments_after_submit"
+    }
+}
 
 # Scheduled Tasks
 # ---------------
@@ -241,4 +251,22 @@ app_license = "mit"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
+
+fixtures = [
+    {
+        "doctype": "Custom Field",
+        "filters": [
+            ["name", "in", [
+                "Salary Detail-loan_application",
+                "Salary Detail-loan_schedule"
+            ]]
+        ]
+    },
+    {
+        "doctype": "Salary Component", 
+        "filters": [
+            ["salary_component", "like", "Loan Deduction%"]
+        ]
+    }
+]
 

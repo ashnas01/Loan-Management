@@ -110,6 +110,6 @@ def get_data(filters):
 			la.loan_status,
 			la.posting_date
 		FROM `tabLoan Application` la
-		WHERE la.docstatus = 1 {where_clause}
+		WHERE la.docstatus != 2 {where_clause}
 		ORDER BY la.posting_date DESC
 	""", values, as_dict=1)

@@ -53,10 +53,15 @@ def update_repayments_after_submit(doc, method):
     payroll_date = getdate(doc.posting_date)
     pending_loans = get_pending_loans_for_payroll(doc.employee, payroll_date)
 
+    frappe.logger().info(f"🔎 Hook triggered for Salary Slip: {doc.name}, Loans: {len(pending_loans)}")
+
     for loan in pending_loans:
+        frappe.logger().info(f"👉 Processing loan: {loan.name} for employee: {doc.employee}")
         update_loan_repayment_status(loan, doc.name, payroll_date)
+        frappe.logger().info(f"✅ Loan updated: {loan.name}")
 
 def get_pending_loans_for_payroll(employee, payroll_date):
+    # print("$"*85)
     """Get pending loan repayments for an employee for a specific payroll period"""
     return frappe.db.sql("""
         SELECT 
@@ -97,6 +102,7 @@ def update_loan_repayment_status(loan_info, salary_slip_name, payroll_date):
     import traceback
 
     try:
+        # print("$"*85)
         # Update repayment schedule
         schedule_doc = frappe.get_doc("Loan Repayment Schedule", loan_info.schedule_name)
         schedule_doc.paid_amount = loan_info.installment_amount

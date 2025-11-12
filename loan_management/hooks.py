@@ -90,7 +90,7 @@ app_license = "mit"
 
 # before_uninstall = "loan_management.uninstall.before_uninstall"
 # after_uninstall = "loan_management.uninstall.after_uninstall"
-after_install = "loan_management.setup.after_install"
+# after_install = "loan_management.setup.after_install"
 
 # Integration Setup
 # ------------------

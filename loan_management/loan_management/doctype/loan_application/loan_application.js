@@ -6,6 +6,7 @@ frappe.ui.form.on('Loan Application', {
                 frappe.call({ 
                     method: 'loan_management.loan_management.doctype.loan_application.loan_application.approve_loan_application', 
                     args: { loan_name: frm.doc.name }, 
+
                     callback: function(r) { 
                         if (r.message) { 
                             frappe.msgprint(r.message.message); 
